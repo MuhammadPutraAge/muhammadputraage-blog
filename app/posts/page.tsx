@@ -1,6 +1,6 @@
 import PostItem from "@/components/PostItem";
 import { Input } from "@/components/ui/input";
-import { getAllPosts } from "@/lib/posts";
+import { getAllPosts, getAllPostSlugs } from "@/lib/posts";
 import { Search } from "lucide-react";
 import Form from "next/form";
 import { redirect } from "next/navigation";
@@ -10,6 +10,11 @@ interface Props {
 }
 
 export const revalidate = 60;
+
+export const generateStaticParams = async () => {
+  const posts = await getAllPostSlugs();
+  return posts;
+};
 
 const Posts = async ({ searchParams }: Props) => {
   const query = (await searchParams).search as string;
