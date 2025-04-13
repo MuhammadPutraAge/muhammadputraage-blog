@@ -1,9 +1,16 @@
-import { getPostBySlug, renderPost } from "@/lib/posts";
+import { getAllPostSlugs, getPostBySlug, renderPost } from "@/lib/posts";
 import Image from "next/image";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
+
+export const revalidate = 60;
+
+export const generateStaticParams = async () => {
+  const posts = await getAllPostSlugs();
+  return posts;
+};
 
 const PostDetails = async ({ params }: Props) => {
   const { slug } = await params;

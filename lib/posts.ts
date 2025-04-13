@@ -32,6 +32,13 @@ export const getAllPosts = async (searchQuery?: string) => {
     .sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
 };
 
+export const getAllPostSlugs = async () => {
+  const posts = await getAllPosts();
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+};
+
 export const getLatestPosts = async () => {
   const posts = await getAllPosts();
   return posts.slice(0, 3);
@@ -42,9 +49,9 @@ export const getPostBySlug = async (slug: string) => {
   return posts.find((post) => post.slug === slug);
 };
 
-export const renderPost = async (content: string) => {
-  const md = markdownit();
-  md.use(await Shiki({ theme: "dracula" }));
+const md = markdownit();
+md.use(await Shiki({ theme: "dracula" }));
 
+export const renderPost = async (content: string) => {
   return md.render(content);
 };
