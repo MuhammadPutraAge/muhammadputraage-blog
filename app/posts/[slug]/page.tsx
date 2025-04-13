@@ -57,7 +57,7 @@ const PostDetails = async ({ params }: Props) => {
       />
 
       <article
-        className="prose prose-invert prose-headings:text-gradient prose-a:text-accent prose-a:underline prose-img:rounded-md prose-img:shadow-sm prose-img:shadow-accent/10"
+        className="prose prose-invert prose-headings:text-gradient prose-a:text-accent prose-a:underline prose-img:rounded-md prose-img:shadow-sm prose-img:shadow-accent/10 prose-headings:bg-clip-text prose-headings:text-transparent prose-headings:bg-gradient-to-b prose-headings:from-white prose-headings:to-white/60"
         dangerouslySetInnerHTML={{ __html: postContent }}
       />
     </main>
