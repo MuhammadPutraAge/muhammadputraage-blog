@@ -9,6 +9,8 @@ interface Props {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }
 
+export const revalidate = 60;
+
 const Posts = async ({ searchParams }: Props) => {
   const query = (await searchParams).search as string;
   const posts = await getAllPosts({ searchQuery: query });
