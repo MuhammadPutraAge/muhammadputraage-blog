@@ -10,6 +10,9 @@ const jakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  icons: [
+    { rel: "icon", type: "image/x-icon", url: "/favicon.ico", sizes: "48x48" },
+  ],
   title: "Muhammad Putra Age's Blog",
   description:
     "A personal blog by Muhammad Putra Age — sharing web development tutorials, insights on modern tech, and lessons from real-world projects.",
