@@ -9,6 +9,8 @@ interface Props {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }
 
+export const revalidate = 60; // revalidate every 60 seconds
+
 const Posts = async ({ searchParams }: Props) => {
   const query = (await searchParams).search as string;
   const posts = await getAllPosts(query);
