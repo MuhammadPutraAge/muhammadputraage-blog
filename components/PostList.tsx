@@ -2,17 +2,38 @@
 
 import { Post } from "@/types/posts";
 import { Search } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import PostItem from "./PostItem";
 import { Input } from "./ui/input";
+import { FormEventHandler, useEffect, useState } from "react";
 
 interface Props {
   posts: Omit<Post, "content">[];
 }
 
 const PostList = ({ posts }: Props) => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const query = searchParams.get("search") || "";
+
+  const [filteredPosts, setFilteredPosts] = useState(posts);
+
+  useEffect(() => {
+    const searchedPosts = posts.filter((post) =>
+      post.title.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredPosts(searchedPosts);
+  }, [posts, query]);
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const search = formData.get("search") as string;
+    router.push(
+      !!search ? `/posts?search=${encodeURIComponent(search)}` : "/posts"
+    );
+  };
 
   return (
     <>
@@ -21,7 +42,10 @@ const PostList = ({ posts }: Props) => {
           {query ? `Search results for "${query}"` : "All Posts"}
         </h1>
 
-        <div className="relative w-full md:w-fit mt-4 md:mt-0">
+        <form
+          onSubmit={handleSubmit}
+          className="relative w-full md:w-fit mt-4 md:mt-0"
+        >
           <Input
             name="search"
             className="bg-white/10 rounded-full md:w-fit md:min-w-[300px] w-full"
@@ -35,12 +59,12 @@ const PostList = ({ posts }: Props) => {
           >
             <Search className="size-4" />
           </button>
-        </div>
+        </form>
       </div>
 
-      {!!posts.length ? (
+      {!!filteredPosts.length ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post) => (
+          {filteredPosts.map((post) => (
             <PostItem key={post.slug} post={post} />
           ))}
         </div>

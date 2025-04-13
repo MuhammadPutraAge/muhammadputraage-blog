@@ -1,19 +1,12 @@
 import PostItem from "@/components/PostItem";
-import { Input } from "@/components/ui/input";
+import SearchInput from "@/components/SearchInput";
 import { getLatestPosts } from "@/lib/posts";
-import { Newspaper, Search } from "lucide-react";
-import Form from "next/form";
+import { Newspaper } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 const Home = async () => {
   const latestPosts = await getLatestPosts();
-
-  const searchPosts = async (formData: FormData) => {
-    "use server";
-    const query = formData.get("search") as string;
-    redirect(`/posts?search=${encodeURIComponent(query)}`);
-  };
 
   return (
     <main className="wrapper">
@@ -29,21 +22,9 @@ const Home = async () => {
           things I&apos;m learning as I grow.
         </p>
 
-        <Form action={searchPosts} className="w-full max-w-xl md:max-w-2xl">
-          <div className="relative">
-            <Input
-              name="search"
-              className="rounded-full bg-white/10 w-full px-5 py-6 md:py-8 text-sm md:text-lg"
-              placeholder="Type to search articles..."
-            />
-            <button
-              type="submit"
-              className="bg-accent rounded-full p-2 absolute top-2 right-2 md:top-3 md:right-3 z-10 flex justify-center items-center cursor-pointer hover:bg-accent-hover transition-colors duration-300"
-            >
-              <Search className="size-4 md:size-6" />
-            </button>
-          </div>
-        </Form>
+        <Suspense>
+          <SearchInput />
+        </Suspense>
       </section>
 
       {/* LATEST POSTS */}
