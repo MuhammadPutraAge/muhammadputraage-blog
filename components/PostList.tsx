@@ -1,11 +1,10 @@
 "use client";
 
+import { Post } from "@/types/posts";
 import { Search } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import PostItem from "./PostItem";
 import { Input } from "./ui/input";
-import { Post } from "@/types/posts";
-import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
 
 interface Props {
   posts: Omit<Post, "content">[];
@@ -16,7 +15,7 @@ const PostList = ({ posts }: Props) => {
   const query = searchParams.get("search") || "";
 
   return (
-    <Suspense>
+    <>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-8">
         <h1 className="text-gradient text-2xl md:text-4xl font-extrabold">
           {query ? `Search results for "${query}"` : "All Posts"}
@@ -50,7 +49,7 @@ const PostList = ({ posts }: Props) => {
           Nothing here for now, but cool stuff is coming soon.
         </p>
       )}
-    </Suspense>
+    </>
   );
 };
 
