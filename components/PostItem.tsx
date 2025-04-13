@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 interface Props {
-  post: Post;
+  post: Omit<Post, "content">;
 }
 
 const PostItem = ({ post }: Props) => {

@@ -7,7 +7,15 @@ import { PostData } from "@/types/posts";
 import markdownit from "markdown-it";
 import Shiki from "@shikijs/markdown-it";
 
-export const getAllPosts = async (searchQuery?: string) => {
+interface GetAllPostsProps {
+  searchQuery?: string;
+  withContent?: boolean;
+}
+
+export const getAllPosts = async ({
+  searchQuery = "",
+  withContent = false,
+}: GetAllPostsProps = {}) => {
   const postsDir = path.join(process.cwd(), "posts");
   const files = fs.readdirSync(postsDir);
 
@@ -18,7 +26,7 @@ export const getAllPosts = async (searchQuery?: string) => {
 
     return {
       ...(data as PostData),
-      content,
+      content: withContent ? content : undefined,
       slug: file.replace(".md", ""),
     };
   });
@@ -45,7 +53,7 @@ export const getLatestPosts = async () => {
 };
 
 export const getPostBySlug = async (slug: string) => {
-  const posts = await getAllPosts();
+  const posts = await getAllPosts({ withContent: true });
   return posts.find((post) => post.slug === slug);
 };
 
