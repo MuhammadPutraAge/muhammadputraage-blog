@@ -3,7 +3,6 @@ import SearchInput from "@/components/SearchInput";
 import { getLatestPosts } from "@/lib/posts";
 import { Newspaper } from "lucide-react";
 import Link from "next/link";
-import { Suspense } from "react";
 
 const Home = async () => {
   const latestPosts = await getLatestPosts();
@@ -22,9 +21,7 @@ const Home = async () => {
           things I&apos;m learning as I grow.
         </p>
 
-        <Suspense>
-          <SearchInput />
-        </Suspense>
+        <SearchInput />
       </section>
 
       {/* LATEST POSTS */}

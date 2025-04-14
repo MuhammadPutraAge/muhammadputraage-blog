@@ -38,8 +38,9 @@ const PostList = ({ posts }: Props) => {
   return (
     <>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-8">
-        <h1 className="text-gradient text-2xl md:text-4xl font-extrabold">
+        <h1 className="text-gradient text-3xl md:text-4xl font-extrabold">
           {query ? `Search results for "${query}"` : "All Posts"}
+          <span className="text-accent">.</span>
         </h1>
 
         <form
